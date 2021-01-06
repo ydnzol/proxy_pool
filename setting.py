@@ -40,7 +40,7 @@ PORT = 5010
 DB_CONN = 'redis://:langke@127.0.0.1:6379/0'
 
 # proxy table name
-TABLE_NAME = 'proxy_poll'
+TABLE_NAME = 'proxy_pool'
 
 
 # ###### config the proxy fetch function ######
