@@ -25,20 +25,20 @@ class ProxyFetcher(object):
     """
     @staticmethod
     def proxylist():
-    """
-    https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list
+        """
+        https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list
 
-    """
-    res = WebRequest.get("https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list").text
-    proxy_lists = res.split("\n")
-    for proxy in proxy_lists:
-        if len(proxy) < 1:
-            continue
-        try:
-            proxy_json = json.loads(proxy)
-        except Exception as err:
-            continue
-        yield '{}:{}'.format(proxy_json['host'],proxy_json['port'])
+        """
+        res = WebRequest.get("https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list").text
+        proxy_lists = res.split("\n")
+        for proxy in proxy_lists:
+            if len(proxy) < 1:
+                continue
+            try:
+                proxy_json = json.loads(proxy)
+            except Exception as err:
+                continue
+            yield '{}:{}'.format(proxy_json['host'],proxy_json['port'])
 
 
     @staticmethod
