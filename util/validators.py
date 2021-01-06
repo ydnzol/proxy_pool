@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-
+import os
 import requests
+
 from re import findall
 from handler.configHandler import ConfigHandler
+
 
 conf = ConfigHandler()
 validators = []
@@ -34,16 +36,13 @@ def timeOutValidator(proxy):
     """
 
     proxies = {"http": "http://{proxy}".format(proxy=proxy), "https": "https://{proxy}".format(proxy=proxy)}
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0',
-               'Accept': '*/*',
-               'Connection': 'keep-alive',
-               'Accept-Language': 'zh-CN,zh;q=0.8'}
+
     try:
-        r = requests.head(conf.verifyUrl, headers=headers, proxies=proxies, timeout=conf.verifyTimeout, verify=False)
+        r = requests.head(conf.verifyUrl, headers=conf.headers, proxies=proxies, timeout=conf.verifyTimeout, verify=False)
         if r.status_code == 200:
             return True
     except Exception as e:
-        pass
+        print(e)
     return False
 
 
@@ -54,5 +53,24 @@ def customValidator(proxy):
     :param proxy:
     :return:
     """
+    os.environ['NO_PROXY'] = 'api.shodan.io'
+    no_local_proxies = {
+        "http": None,
+        "https": None
+    }
+    proxies = {"http": "http://{proxy}".format(proxy=proxy), "https": "https://{proxy}".format(proxy=proxy), 'socks': 'socks5://{proxy}'.format(proxy=proxy)}
+    no_local_proxies_ip = send_request(no_local_proxies)
+    proxies_ip = send_request(proxies)
+    if isinstance(no_local_proxies_ip, str) and isinstance(proxies_ip, str) and no_local_proxies_ip not in proxies_ip:
+        return True
 
-    return True
+def send_request(proxy):
+    try:
+        r = requests.get(conf.verifySrcUrl, headers=conf.headers, proxies=proxy, timeout=conf.verifyTimeout, verify=False)
+    except Exception as e:
+        print(e)
+    else:
+        if r.status_code == 200 and len(r.text) > 0:
+            print(r.text)
+            return r.text
+

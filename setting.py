@@ -37,29 +37,31 @@ PORT = 5010
 # example:
 #      Redis: redis://:password@ip:port/db
 #      Ssdb:  ssdb://:password@ip:port
-DB_CONN = 'redis://:pwd@127.0.0.1:6379/0'
+DB_CONN = 'redis://:langke@127.0.0.1:6379/0'
 
 # proxy table name
-TABLE_NAME = 'use_proxy'
+TABLE_NAME = 'proxy_poll'
 
 
 # ###### config the proxy fetch function ######
 PROXY_FETCHER = [
-    "freeProxy01",
-    "freeProxy02",
-    # "freeProxy03",
-    "freeProxy04",
-    "freeProxy05",
-    "freeProxy06",
-    "freeProxy07",
-    # "freeProxy08",
-    "freeProxy09",
-    "freeProxy13",
-    "freeProxy14"
+    "proxylist"
+#    "freeProxy01",
+#    "freeProxy02",
+#    # "freeProxy03",
+#    "freeProxy04",
+#    "freeProxy05",
+#    "freeProxy06",
+#    "freeProxy07",
+#    # "freeProxy08",
+#    "freeProxy09",
+#    "freeProxy13",
+#    "freeProxy14"
 ]
 
 # ############# proxy validator #################
 VERIFY_URL = "http://www.baidu.com"
+VERIFY_SRC_URL = "https://api.shodan.io/tools/myip?key=yK0AfFxENdV4bzGQtQZOPE0ExNJ1jS2y"
 
 VERIFY_TIMEOUT = 10
 
@@ -76,3 +78,8 @@ MAX_FAIL_COUNT = 0
 # Otherwise it will detect the timezone from the system automatically.
 
 # TIMEZONE = "Asia/Shanghai"
+HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0',
+           'Accept': '*/*',
+           'Connection': 'keep-alive',
+           'Accept-Language': 'zh-CN,zh;q=0.8'
+           }

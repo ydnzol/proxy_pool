@@ -12,16 +12,22 @@
 """
 __author__ = 'JHao'
 
+from util.validators import validators
+
 from test import testConfigHandler
 from test import testLogHandler
 from test import testDbClient
 
 if __name__ == '__main__':
-    print("ConfigHandler:")
-    testConfigHandler.testConfig()
+    # print("ConfigHandler:")
+    # testConfigHandler.testConfig()
 
-    print("LogHandler:")
-    testLogHandler.testLogHandler()
+    # print("LogHandler:")
+    # testLogHandler.testLogHandler()
 
-    print("DbClient:")
-    testDbClient.testDbClient()
+    # print("DbClient:")
+    # testDbClient.testDbClient()
+    proxy = '139.196.218.89:3128'
+    for func in validators:
+        if not func(proxy):
+            print('False')

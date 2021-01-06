@@ -50,6 +50,10 @@ class ConfigHandler(withMetaclass(Singleton)):
         return os.getenv("VERIFY_URL", setting.VERIFY_URL)
 
     @LazyProperty
+    def verifySrcUrl(self):
+        return os.getenv("VERIFY_SRC_URL", setting.VERIFY_SRC_URL)
+
+    @LazyProperty
     def verifyTimeout(self):
         return os.getenv("VERIFY_TIMEOUT", setting.VERIFY_TIMEOUT)
 
@@ -60,3 +64,7 @@ class ConfigHandler(withMetaclass(Singleton)):
     @LazyProperty
     def timezone(self):
         return os.getenv("TIMEZONE", getattr(setting, 'TIMEZONE', None))
+
+    @LazyProperty
+    def headers(self):
+        return os.getenv("HEADERS", setting.HEADERS)
