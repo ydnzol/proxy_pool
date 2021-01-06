@@ -29,7 +29,7 @@ class ProxyFetcher(object):
         https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list
 
         """
-        res = WebRequest.get("https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list").text
+        res = WebRequest().get("https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list").text
         proxy_lists = res.split("\n")
         for proxy in proxy_lists:
             if len(proxy) < 1:
