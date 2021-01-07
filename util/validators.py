@@ -60,11 +60,15 @@ def customValidator(proxy):
     }
     proxies = {"http": "http://{proxy}".format(proxy=proxy), "https": "https://{proxy}".format(proxy=proxy), 'socks': 'socks5://{proxy}'.format(proxy=proxy)}
     no_local_proxies_ip = send_request(no_local_proxies)
-    proxies_ip = send_request(proxies)
-    if isinstance(no_local_proxies_ip, str) and isinstance(proxies_ip, str) and no_local_proxies_ip not in proxies_ip:
+    http_proxies_ip = send_request(proxies, is_http=True)
+    https_proxies_ip = send_request(proxies, is_http=False)
+    if isinstance(no_local_proxies_ip, str) and isinstance(http_proxies_ip, str) and isinstance(https_proxies_ip, str) and (no_local_proxies_ip not in http_proxies_ip or no_local_proxies_ip not in https_proxies_ip):
         return True
 
-def send_request(proxy):
+def send_request(proxy, is_http=False):
+    url = conf.verifySrcUrl
+    if is_http:
+        url = url.replace("https", "http")
     try:
         r = requests.get(conf.verifySrcUrl, headers=conf.headers, proxies=proxy, timeout=conf.verifyTimeout, verify=False)
     except Exception as e:
